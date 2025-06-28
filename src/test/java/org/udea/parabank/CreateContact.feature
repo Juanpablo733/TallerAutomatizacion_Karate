@@ -12,25 +12,37 @@ Scenario: Login y crear contacto
   Then status 200
   * def authToken = response.token
 
-  # Crear contacto
+  Feature: Crear contacto con datos aleatorios
+
+Scenario: Generar contacto con email, teléfono y código postal aleatorio
+
+  # Generar email aleatorio, phone aleatorio y postalcode aleatorio
+  * def randomEmail = 'user' + java.util.UUID.randomUUID() + '@udea.edu.co'
+  * def randomPhone = '' + Math.floor(1000000000 + Math.random() * 9000000000).toFixed(0)
+  * def randomPostal = '' + Math.floor(10000 + Math.random() * 90000).toFixed(0)
+
+  # Data con los datos generados
+  * def contactoData =
+  """
+  {
+    "firstName": "Andres",
+    "lastName": "UDEA",
+    "birthdate": "1970-01-01",
+    "email": "#(randomEmail)",
+    "phone": "#(randomPhone)",
+    "street1": "1 Main St.",
+    "street2": "Apartment A",
+    "city": "Anytown",
+    "stateProvince": "KS",
+    "postalCode": "#(randomPostal)",
+    "country": "USA"
+  }
+  """
+
+  # Crear contacto y vaidar info
   Given path '/contacts'
   And header Authorization = 'Bearer ' + authToken
-  And request
-"""
-  { 
-    "firstName": "Pruebas", 
-    "lastName": "KARATE", 
-    "birthdate": "1970-01-01", 
-    "email": "prueba@test.com", 
-    "phone": "8005555555", 
-    "street1": "1 Main St.", 
-    "street2": "Apartment A", 
-    "city": "Anytown", 
-    "stateProvince": "KS", 
-    "postalCode": "12345", 
-    "country": "USA" 
-  }
-"""
+  And request contactoData
   When method POST
   Then status 201
   And match response ==
