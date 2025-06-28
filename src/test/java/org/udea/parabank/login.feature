@@ -7,7 +7,7 @@ Feature: Login to app contact
 
   Scenario: Customer Login
     Given path '/users/login'
-    And request {"email": "pruebasudea@test.com","password": "12345678"}
+    And request {"email": "juan@test.com","password": "juan123"}
     When method POST
     Then status 200
     And match response ==
