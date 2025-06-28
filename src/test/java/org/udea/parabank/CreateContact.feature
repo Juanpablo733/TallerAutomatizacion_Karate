@@ -15,7 +15,8 @@ Scenario: Login y crear contacto
   # Crear contacto
   Given path '/contacts'
   And header Authorization = 'Bearer ' + authToken
-  And request 
+  And request
+"""
   { 
     "firstName": "Pruebas", 
     "lastName": "KARATE", 
@@ -29,6 +30,7 @@ Scenario: Login y crear contacto
     "postalCode": "12345", 
     "country": "USA" 
   }
+"""
   When method POST
   Then status 201
   And match response ==
