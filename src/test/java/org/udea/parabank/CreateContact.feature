@@ -4,17 +4,14 @@ Feature: create contact to app contact
   Background:
     * url baseUrl
     * header Accept = 'application/json'
-Scenario: Login y crear contacto
-  # Login
-  Given path '/users/login'
-  And request { "email": "juan@test.com", "password": "juan123" }
-  When method POST
-  Then status 200
-  * def authToken = response.token
 
-  Feature: Crear contacto con datos aleatorios
-
-Scenario: Generar contacto con email, teléfono y código postal aleatorio
+  Scenario: Login y crear contacto
+    # Login
+    Given path '/users/login'
+    And request { "email": "juan@test.com", "password": "juan123" }
+    When method POST
+    Then status 200
+    * def authToken = response.token
 
   # Generar email aleatorio, phone aleatorio y postalcode aleatorio
   * def randomEmail = 'user' + java.util.UUID.randomUUID() + '@udea.edu.co'
